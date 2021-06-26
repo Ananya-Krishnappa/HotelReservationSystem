@@ -19,12 +19,22 @@ public interface IHotelReservationService {
 	 * @param startDate
 	 * @param endDate
 	 * @param customerType
-	 * @return
+	 * @return List<Hotel>
 	 * @throws HotelReservationException
 	 */
-	Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate, CustomerType customerType)
+	List<Hotel> findCheapestHotels(LocalDate startDate, LocalDate endDate, CustomerType customerType)
 			throws HotelReservationException;
 
+	/**
+	 * Function to configure rate for customer based on type
+	 * 
+	 * @param hotelName
+	 * @param customerType
+	 * @param weekdayRate
+	 * @param weekendRate
+	 * @return List<Hotel>
+	 * @throws HotelReservationException
+	 */
 	List<Hotel> configureRateForCustomerType(String hotelName, CustomerType customerType, Double weekdayRate,
 			Double weekendRate) throws HotelReservationException;
 }

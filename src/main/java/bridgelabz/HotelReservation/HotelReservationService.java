@@ -11,12 +11,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,7 +22,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class HotelReservationService implements IHotelReservationService {
-	Scanner scanner = new Scanner(System.in);
 	private static final Logger LOG = LogManager.getLogger(HotelReservationService.class);
 	List<Hotel> hotelList = new ArrayList<Hotel>();
 
@@ -59,14 +55,13 @@ public class HotelReservationService implements IHotelReservationService {
 	 * Function to find a cheapest hotel for the given date
 	 * 
 	 * @param startDate,endDate,customerType
-	 * @return cheapestHotel
+	 * @return List<Hotel>
 	 * @throws HotelReservationException
 	 */
 	@Override
-	public Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate, CustomerType customerType)
+	public List<Hotel> findCheapestHotels(LocalDate startDate, LocalDate endDate, CustomerType customerType)
 			throws HotelReservationException {
 		try {
-			Hotel cheapestHotel = new Hotel();
 			if (startDate == null || endDate == null) {
 				throw new IllegalArgumentException(
 						"Invalid method argument(s) to findCheapestHotelBetween(" + startDate + "," + endDate + ")");
@@ -78,14 +73,37 @@ public class HotelReservationService implements IHotelReservationService {
 					.filter(isWeekend.negate()).count();
 			Long weekendCount = Stream.iterate(startDate, date -> date.plusDays(1)).limit(daysBetween).filter(isWeekend)
 					.count();
-			cheapestHotel = hotelList.stream()
-					.map(hotel -> calculateTotalCost(hotel, weekdayCount, weekendCount, customerType))
-					.min(Comparator.comparing(Hotel::getTotalCost)).orElseThrow(NoSuchElementException::new);
-			LOG.debug(cheapestHotel.toString());
-			return cheapestHotel;
+			hotelList.stream().map(hotel -> calculateTotalCost(hotel, weekdayCount, weekendCount, customerType))
+					.collect(Collectors.toList());
+			List<Hotel> cheapestHotelList = filterCheapestHotels(hotelList);
+			LOG.debug("Cheapest hotel " + cheapestHotelList.toString());
+			return cheapestHotelList;
 		} catch (Exception e) {
 			throw new HotelReservationException(e.getMessage());
 		}
+	}
+
+	/**
+	 * Function to get cheapest hotels
+	 * 
+	 * @param hotelList
+	 * @return
+	 */
+	private List<Hotel> filterCheapestHotels(List<Hotel> hotelList) {
+		List<Hotel> cheapestHotelList = new ArrayList<Hotel>();
+		if (null != hotelList && hotelList.size() > 0) {
+			Double minTotalCost = hotelList.get(0).getTotalCost();
+			for (Hotel hotel : hotelList) {
+				if (hotel.getTotalCost().compareTo(minTotalCost) < 0) {
+					minTotalCost = hotel.getTotalCost();
+					cheapestHotelList.clear();
+					cheapestHotelList.add(hotel);
+				} else if (hotel.getTotalCost().compareTo(minTotalCost) == 0) {
+					cheapestHotelList.add(hotel);
+				}
+			}
+		}
+		return cheapestHotelList;
 	}
 
 	/**
@@ -143,5 +161,4 @@ public class HotelReservationService implements IHotelReservationService {
 		hotel.getRateMap().put(customerType, dayTypeAndRateMap);
 		return hotel;
 	}
-
 }
