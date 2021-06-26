@@ -37,4 +37,6 @@ public interface IHotelReservationService {
 	 */
 	List<Hotel> configureRateForCustomerType(String hotelName, CustomerType customerType, Double weekdayRate,
 			Double weekendRate) throws HotelReservationException;
+
+	List<Hotel> updateRatingsForHotel(String hotelName, int rating) throws HotelReservationException;
 }

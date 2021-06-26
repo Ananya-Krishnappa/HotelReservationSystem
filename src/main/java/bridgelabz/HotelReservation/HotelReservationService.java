@@ -142,7 +142,7 @@ public class HotelReservationService implements IHotelReservationService {
 			hotelList.stream().filter(hotel -> hotel.getName().equalsIgnoreCase(hotelName))
 					.map(hotel -> updateWeekDayRate(hotel, customerType, dayTypeAndRateMap))
 					.collect(Collectors.toList());
-			System.out.println(hotelList.toString());
+			LOG.debug("configure Rate For Customer Type " + hotelList.toString());
 			return hotelList;
 		} catch (Exception e) {
 			throw new HotelReservationException(e.getMessage());
@@ -159,6 +159,29 @@ public class HotelReservationService implements IHotelReservationService {
 	 */
 	private Hotel updateWeekDayRate(Hotel hotel, CustomerType customerType, Map<DayType, Double> dayTypeAndRateMap) {
 		hotel.getRateMap().put(customerType, dayTypeAndRateMap);
+		return hotel;
+	}
+
+	/**
+	 * This method is used to update the ratings for hotel
+	 */
+	@Override
+	public List<Hotel> updateRatingsForHotel(String hotelName, int rating) throws HotelReservationException {
+		hotelList.stream().filter(hotel -> hotel.getName().equalsIgnoreCase(hotelName))
+				.map(hotel -> setRating(hotel, rating)).collect(Collectors.toList());
+		LOG.debug("updated rating " + hotelList.toString());
+		return hotelList;
+	}
+
+	/**
+	 * Function to set rating
+	 * 
+	 * @param hotel
+	 * @param rating
+	 * @return
+	 */
+	private Hotel setRating(Hotel hotel, int rating) {
+		hotel.setRating(rating);
 		return hotel;
 	}
 }
