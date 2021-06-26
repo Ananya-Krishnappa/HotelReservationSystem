@@ -38,5 +38,25 @@ public interface IHotelReservationService {
 	List<Hotel> configureRateForCustomerType(String hotelName, CustomerType customerType, Double weekdayRate,
 			Double weekendRate) throws HotelReservationException;
 
+	/**
+	 * This method is used to add ratings for hotel
+	 * 
+	 * @param hotelName
+	 * @param rating
+	 * @return List<Hotel>
+	 * @throws HotelReservationException
+	 */
 	List<Hotel> updateRatingsForHotel(String hotelName, int rating) throws HotelReservationException;
+
+	/**
+	 * This method id used to find the best rated hotel
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @param customerType
+	 * @return Hotel
+	 * @throws HotelReservationException
+	 */
+	Hotel findCheapestBestRatedHotel(LocalDate startDate, LocalDate endDate, CustomerType customerType)
+			throws HotelReservationException;
 }

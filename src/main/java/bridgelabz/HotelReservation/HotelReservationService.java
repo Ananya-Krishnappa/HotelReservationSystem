@@ -11,9 +11,11 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -183,5 +185,29 @@ public class HotelReservationService implements IHotelReservationService {
 	private Hotel setRating(Hotel hotel, int rating) {
 		hotel.setRating(rating);
 		return hotel;
+	}
+
+	/**
+	 * This method id used to find the best rated hotel
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @param customerType
+	 * @return Hotel
+	 * @throws HotelReservationException
+	 */
+	@Override
+	public Hotel findCheapestBestRatedHotel(LocalDate startDate, LocalDate endDate, CustomerType customerType)
+			throws HotelReservationException {
+		try {
+			Hotel cheapAndBest = new Hotel();
+			List<Hotel> cheapestHotels = findCheapestHotels(startDate, endDate, customerType);
+			cheapAndBest = cheapestHotels.stream().max(Comparator.comparing(Hotel::getRating))
+					.orElseThrow(NoSuchElementException::new);
+			LOG.debug("Cheap and best hotel " + cheapAndBest.toString());
+			return cheapAndBest;
+		} catch (Exception e) {
+			throw new HotelReservationException(e.getMessage());
+		}
 	}
 }
