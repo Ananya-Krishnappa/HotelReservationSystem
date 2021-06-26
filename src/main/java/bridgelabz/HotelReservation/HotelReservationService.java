@@ -12,11 +12,13 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
@@ -104,6 +106,41 @@ public class HotelReservationService implements IHotelReservationService {
 		Double weekendCost = weekendCount * weekendRate;
 		Double totalCost = weekdayCost + weekendCost;
 		hotel.setTotalCost(totalCost);
+		return hotel;
+	}
+
+	/**
+	 * configuring rate for customer type
+	 * 
+	 * @return
+	 * @throws HotelReservationException
+	 */
+	public List<Hotel> configureRateForCustomerType(String hotelName, CustomerType customerType, Double weekdayRate,
+			Double weekendRate) throws HotelReservationException {
+		try {
+			Map<DayType, Double> dayTypeAndRateMap = new HashMap<DayType, Double>();
+			dayTypeAndRateMap.put(DayType.WEEKDAY, weekdayRate);
+			dayTypeAndRateMap.put(DayType.WEEKEND, weekendRate);
+			hotelList.stream().filter(hotel -> hotel.getName().equalsIgnoreCase(hotelName))
+					.map(hotel -> updateWeekDayRate(hotel, customerType, dayTypeAndRateMap))
+					.collect(Collectors.toList());
+			System.out.println(hotelList.toString());
+			return hotelList;
+		} catch (Exception e) {
+			throw new HotelReservationException(e.getMessage());
+		}
+	}
+
+	/**
+	 * function to update week day rate for the given hotel and customer type
+	 * 
+	 * @param hotel
+	 * @param customerType
+	 * @param dayTypeAndRateMap
+	 * @return
+	 */
+	private Hotel updateWeekDayRate(Hotel hotel, CustomerType customerType, Map<DayType, Double> dayTypeAndRateMap) {
+		hotel.getRateMap().put(customerType, dayTypeAndRateMap);
 		return hotel;
 	}
 

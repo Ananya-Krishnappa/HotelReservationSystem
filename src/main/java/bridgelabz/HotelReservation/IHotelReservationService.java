@@ -25,4 +25,6 @@ public interface IHotelReservationService {
 	Hotel findCheapestHotel(LocalDate startDate, LocalDate endDate, CustomerType customerType)
 			throws HotelReservationException;
 
+	List<Hotel> configureRateForCustomerType(String hotelName, CustomerType customerType, Double weekdayRate,
+			Double weekendRate) throws HotelReservationException;
 }

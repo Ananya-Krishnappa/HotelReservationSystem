@@ -19,6 +19,7 @@ public class HotelReservationMain {
 		hotelReservationService.addHotel(createHotel());
 		hotelReservationService.addHotel(createHotel());
 		hotelReservationService.findCheapestHotel(LocalDate.now(), LocalDate.of(2021, 6, 30), CustomerType.REGULAR);
+		hotelReservationService.configureRateForCustomerType("Lakewood", CustomerType.REGULAR, 200.0, 300.0);
 		scanner.close();
 	}
 
