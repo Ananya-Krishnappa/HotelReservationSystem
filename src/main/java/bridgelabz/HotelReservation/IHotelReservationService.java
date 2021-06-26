@@ -5,17 +5,16 @@ import java.util.List;
 
 public interface IHotelReservationService {
 	/**
-	 * Function to add a hotel with the given name and rate for regular customer
+	 * Function to add a hotel to the hotel list
 	 * 
-	 * @param hotelName
-	 * @param rateForRegularCustomer
-	 * @return
+	 * @param hotel
+	 * @return List<Hotel>
 	 * @throws HotelReservationException
 	 */
-	List<Hotel> addHotel(String hotelName) throws HotelReservationException;
+	List<Hotel> addHotel(Hotel hotel) throws HotelReservationException;
 
 	/**
-	 * tThis method finds the cheapest hotel
+	 * This method finds the cheapest hotel
 	 * 
 	 * @param startDate
 	 * @param endDate

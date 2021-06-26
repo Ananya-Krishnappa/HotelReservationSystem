@@ -1,6 +1,5 @@
 package bridgelabz.HotelReservation;
 
-import java.util.Comparator;
 import java.util.Map;
 
 public class Hotel {
@@ -9,8 +8,11 @@ public class Hotel {
 	Map<CustomerType, Map<DayType, Double>> rateMap;
 	Double totalCost;
 
-	public Hotel(String name) {
+	public Hotel(String name, int rating, Map<CustomerType, Map<DayType, Double>> rateMap, Double totalCost) {
 		this.name = name;
+		this.rating = rating;
+		this.rateMap = rateMap;
+		this.totalCost = totalCost;
 	}
 
 	public Hotel() {

@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -37,70 +36,21 @@ public class HotelReservationService implements IHotelReservationService {
 	}
 
 	/**
-	 * Function to add a hotel with the given name and rate for regular customer
+	 * Function to add a hotel to the hotel list
 	 * 
-	 * @param hotelName
-	 * @param rateForRegularCustomer
-	 * @return
+	 * @param hotel
+	 * @return List<Hotel>
 	 * @throws HotelReservationException
 	 */
 	@Override
-	public List<Hotel> addHotel(String hotelName) throws HotelReservationException {
+	public List<Hotel> addHotel(Hotel hotel) throws HotelReservationException {
 		try {
-			Hotel hotel = new Hotel(hotelName);
-			hotel = rateHotel(hotel);
-			hotel = configureHotelRate(hotel);
 			hotelList.add(hotel);
 			LOG.debug("Hotel added successfully " + hotelList.toString());
 			return hotelList;
 		} catch (Exception e) {
 			throw new HotelReservationException(e.getMessage());
 		}
-	}
-
-	/**
-	 * to get the rating for hotel
-	 * 
-	 * @param hotel
-	 * @return
-	 */
-	private Hotel rateHotel(Hotel hotel) {
-		LOG.debug("Enter rating");
-		int rating = scanner.nextInt();
-		hotel.setRating(rating);
-		return hotel;
-	}
-
-	/**
-	 * configuring hotel rate
-	 * 
-	 * @param hotel
-	 * @return Hotel
-	 */
-	private Hotel configureHotelRate(Hotel hotel) {
-		Map<CustomerType, Map<DayType, Double>> rateMap = new HashMap<CustomerType, Map<DayType, Double>>();
-		rateMap.put(CustomerType.REGULAR, configureRateForCustomerType(CustomerType.REGULAR));
-		rateMap.put(CustomerType.REWARDS, configureRateForCustomerType(CustomerType.REWARDS));
-		hotel.setRateMap(rateMap);
-		return hotel;
-	}
-
-	/**
-	 * configuring rate for customer type
-	 * 
-	 * @param customerType
-	 * @return
-	 */
-	private Map<DayType, Double> configureRateForCustomerType(CustomerType customerType) {
-		Map<DayType, Double> dayTypeAndRateMap = new HashMap<DayType, Double>();
-		LOG.debug("Enter rates for " + customerType.name() + " Customer");
-		LOG.debug("Enter weekday rate");
-		String weekdayRate = scanner.next();
-		dayTypeAndRateMap.put(DayType.WEEKDAY, Double.valueOf(weekdayRate));
-		LOG.debug("Enter weekend rate");
-		String weekendRate = scanner.next();
-		dayTypeAndRateMap.put(DayType.WEEKEND, Double.valueOf(weekendRate));
-		return dayTypeAndRateMap;
 	}
 
 	/**
