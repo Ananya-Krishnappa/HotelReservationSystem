@@ -21,6 +21,8 @@ public class HotelReservationServiceTest {
 	@Test
 	public void validate_shouldAddHotelToTheListWhenGivenHotelNameAndRate() throws HotelReservationException {
 		hotelList = hotelReservationService.addHotel("Lakewood", Double.valueOf(110));
-		assertThat(hotelList, hasSize(1));
+		hotelList = hotelReservationService.addHotel("Bridgewood", Double.valueOf(160));
+		hotelList = hotelReservationService.addHotel("Ridgewood", Double.valueOf(220));
+		assertThat(hotelList, hasSize(3));
 	}
 }

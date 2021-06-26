@@ -1,3 +1,10 @@
+/**
+ * Purpose:Hotel Reservation System- program to help find the customer the cheapest hotel.
+ * @author Ananya K
+ * @version 1.0
+ * @since 26/06/2021
+ * 
+ */
 package bridgelabz.WorkshopCollections;
 
 import java.util.ArrayList;
@@ -18,6 +25,14 @@ public class HotelReservationService implements IHotelReservationService {
 		this.hotelList = hotelList;
 	}
 
+	/**
+	 * Function to add a hotel with the given name and rate for regular customer
+	 * 
+	 * @param hotelName
+	 * @param rateForRegularCustomer
+	 * @return
+	 * @throws HotelReservationException
+	 */
 	@Override
 	public List<Hotel> addHotel(String hotelName, Double rateForRegularCustomer) throws HotelReservationException {
 		try {
