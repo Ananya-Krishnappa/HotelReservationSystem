@@ -59,4 +59,12 @@ public interface IHotelReservationService {
 	 */
 	Hotel findCheapestBestRatedHotel(LocalDate startDate, LocalDate endDate, CustomerType customerType)
 			throws HotelReservationException;
+
+	/**
+	 * Function to find the best rated hotel
+	 * 
+	 * @return Hotel
+	 * @throws HotelReservationException
+	 */
+	Hotel findBestRatedHotel() throws HotelReservationException;
 }

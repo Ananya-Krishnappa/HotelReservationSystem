@@ -23,6 +23,7 @@ public class HotelReservationMain {
 		hotelReservationService.updateRatingsForHotel("Lakewood", 2);
 		hotelReservationService.findCheapestBestRatedHotel(LocalDate.now(), LocalDate.of(2021, 6, 30),
 				CustomerType.REGULAR);
+		hotelReservationService.findBestRatedHotel();
 		scanner.close();
 	}
 

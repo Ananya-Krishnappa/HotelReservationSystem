@@ -210,4 +210,19 @@ public class HotelReservationService implements IHotelReservationService {
 			throw new HotelReservationException(e.getMessage());
 		}
 	}
+
+	/**
+	 * Function to find the best rated hotel
+	 * 
+	 * @return Hotel
+	 * @throws HotelReservationException
+	 */
+	@Override
+	public Hotel findBestRatedHotel() throws HotelReservationException {
+		Hotel bestRated = new Hotel();
+		bestRated = hotelList.stream().max(Comparator.comparing(Hotel::getRating))
+				.orElseThrow(NoSuchElementException::new);
+		LOG.debug("Best rated hotel " + bestRated.toString());
+		return bestRated;
+	}
 }
