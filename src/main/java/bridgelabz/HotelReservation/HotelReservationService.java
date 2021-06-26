@@ -188,7 +188,7 @@ public class HotelReservationService implements IHotelReservationService {
 	}
 
 	/**
-	 * This method is used to find the cheapest best rated hotel.
+	 * This method is used to find the cheapest best rated hotel
 	 * 
 	 * @param startDate
 	 * @param endDate
@@ -212,7 +212,7 @@ public class HotelReservationService implements IHotelReservationService {
 	}
 
 	/**
-	 * Function to find the best rated hotel
+	 * Function to find the best rated hotel.
 	 * 
 	 * @return Hotel
 	 * @throws HotelReservationException
