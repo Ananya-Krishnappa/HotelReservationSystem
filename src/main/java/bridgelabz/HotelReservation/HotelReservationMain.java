@@ -1,5 +1,6 @@
-package bridgelabz.WorkshopCollections;
+package bridgelabz.HotelReservation;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,19 +15,14 @@ public class HotelReservationMain {
 		Scanner scanner = new Scanner(System.in);
 		LOG.debug("Enter hotel name");
 		String hotelName = scanner.next();
-		LOG.debug("Enter Rate for regular customer");
-		String rateForRegularCustomer = scanner.next();
-		hotelReservationService.addHotel(hotelName, Double.valueOf(rateForRegularCustomer));
+		hotelReservationService.addHotel(hotelName);
 		LOG.debug("Enter hotel name");
 		hotelName = scanner.next();
-		LOG.debug("Enter Rate for regular customer");
-		rateForRegularCustomer = scanner.next();
-		hotelReservationService.addHotel(hotelName, Double.valueOf(rateForRegularCustomer));
+		hotelReservationService.addHotel(hotelName);
 		LOG.debug("Enter hotel name");
 		hotelName = scanner.next();
-		LOG.debug("Enter Rate for regular customer");
-		rateForRegularCustomer = scanner.next();
-		hotelReservationService.addHotel(hotelName, Double.valueOf(rateForRegularCustomer));
+		hotelReservationService.addHotel(hotelName);
+		hotelReservationService.findCheapestHotel(LocalDate.now(), LocalDate.of(2021, 6, 30), CustomerType.REGULAR);
 		scanner.close();
 	}
 }

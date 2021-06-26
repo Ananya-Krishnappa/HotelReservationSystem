@@ -1,4 +1,4 @@
-package bridgelabz.WorkshopCollections;
+package bridgelabz.HotelReservation;
 
 public class HotelReservationException extends Exception {
 
