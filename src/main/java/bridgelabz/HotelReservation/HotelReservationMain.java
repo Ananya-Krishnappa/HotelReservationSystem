@@ -24,6 +24,7 @@ public class HotelReservationMain {
 		hotelReservationService.findCheapestBestRatedHotel(LocalDate.now(), LocalDate.of(2021, 6, 30),
 				CustomerType.REGULAR);
 		hotelReservationService.findBestRatedHotel();
+		hotelReservationService.configureRateForCustomerType("Lakewood", CustomerType.REWARDS, 200.0, 300.0);
 		scanner.close();
 	}
 
